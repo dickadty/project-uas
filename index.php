@@ -1,4 +1,4 @@
 <?php
 // Redirect langsung ke halaman utama
-header("Location: pages/index.php");
+header("Location: pages/hone.php");
 exit;

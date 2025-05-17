@@ -179,87 +179,7 @@
                 </nav>
             </div>
 
-            <!-- Sidebar Panel -->
-            <div class="sidebar-panel">
-                <div>
-                    <h4>Messages <span class="badge badge-info pull-right">16</span></h4>
-                    <div class="feed-element">
-                        <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a1.jpg">
-                        </a>
-                        <div class="media-body">
-                            There are many variations of passages of Lorem Ipsum available.
-                            <br>
-                            <small class="text-muted">Today 4:21 pm</small>
-                        </div>
-                    </div>
-                    <div class="feed-element">
-                        <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a2.jpg">
-                        </a>
-                        <div class="media-body">
-                            TIt is a long established fact that.
-                            <br>
-                            <small class="text-muted">Yesterday 2:45 pm</small>
-                        </div>
-                    </div>
-                    <div class="feed-element">
-                        <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a3.jpg">
-                        </a>
-                        <div class="media-body">
-                            Many desktop publishing packages.
-                            <br>
-                            <small class="text-muted">Yesterday 1:10 pm</small>
-                        </div>
-                    </div>
-                    <div class="feed-element">
-                        <a href="#" class="pull-left">
-                            <img alt="image" class="img-circle" src="img/a4.jpg">
-                        </a>
-                        <div class="media-body">
-                            The generated Lorem Ipsum is therefore always free.
-                            <br>
-                            <small class="text-muted">Monday 8:37 pm</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="m-t-md">
-                    <h4>Statistics</h4>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.
-                    </p>
-                    <div class="row m-t-sm">
-                        <div class="col-md-6">
-                            <span class="bar">5,3,9,6,5,9,7,3,5,2</span>
-                            <h5><strong>169</strong> Posts</h5>
-                        </div>
-                        <div class="col-md-6">
-                            <span class="line">5,3,9,6,5,9,7,3,5,2</span>
-                            <h5><strong>28</strong> Orders</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="m-t-md">
-                    <h4>Discussion</h4>
-                    <div>
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <span class="badge badge-primary">16</span>
-                                General topic
-                            </li>
-                            <li class="list-group-item ">
-                                <span class="badge badge-info">12</span>
-                                The generated Lorem
-                            </li>
-                            <li class="list-group-item">
-                                <span class="badge badge-warning">7</span>
-                                There are many variations
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+
 
             <!-- Footer -->
             <div class="footer">
@@ -276,9 +196,7 @@
 
         <div id="right-sidebar">
             <div class="sidebar-container">
-
                 <ul class="nav nav-tabs navs-3">
-
                     <li class="active"><a data-toggle="tab" href="#tab-1">
                             Notes
                         </a></li>
@@ -289,7 +207,6 @@
                             <i class="fa fa-gear"></i>
                         </a></li>
                 </ul>
-
                 <div class="tab-content">
 
 
@@ -299,9 +216,7 @@
                             <h3> <i class="fa fa-comments-o"></i> Latest Notes</h3>
                             <small><i class="fa fa-tim"></i> You have 10 new message.</small>
                         </div>
-
                         <div>
-
                             <div class="sidebar-message">
                                 <a href="#">
                                     <div class="pull-left text-center">
@@ -313,7 +228,6 @@
                                         </div>
                                     </div>
                                     <div class="media-body">
-
                                         There are many variations of passages of Lorem Ipsum available.
                                         <br>
                                         <small class="text-muted">Today 4:21 pm</small>
@@ -325,7 +239,6 @@
                     </div>
 
                     <div id="tab-2" class="tab-pane">
-
                         <div class="sidebar-title">
                             <h3> <i class="fa fa-cube"></i> Latest projects</h3>
                             <small><i class="fa fa-tim"></i> You have 14 projects. 10 not completed.</small>
@@ -362,7 +275,6 @@
                                     <div class="small pull-right m-t-xs">9 hours ago</div>
                                     <h4>Meeting</h4>
                                     By the readable content of a page when looking at its layout.
-
                                     <div class="small">Completion with: 14%</div>
                                     <div class="progress progress-mini">
                                         <div style="width: 14%;" class="progress-bar progress-bar-info"></div>
@@ -426,18 +338,14 @@
                                     <div class="small text-muted m-t-xs">Project end: 4:00 pm - 12.06.2014</div>
                                 </a>
                             </li>
-
                         </ul>
-
                     </div>
-
                     <div id="tab-3" class="tab-pane">
 
                         <div class="sidebar-title">
                             <h3><i class="fa fa-gears"></i> Settings</h3>
                             <small><i class="fa fa-tim"></i> You have 14 projects. 10 not completed.</small>
                         </div>
-
                         <div class="setings-item">
                             <span>
                                 Show notifications
@@ -552,5 +460,4 @@
             </div>
         </div>
     </div>
-
 </body>
