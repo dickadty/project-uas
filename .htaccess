@@ -1,0 +1,8 @@
+RewriteEngine On
+
+# Pastikan file atau direktori yang ada tidak di-rewrite
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Jika file atau folder tidak ditemukan, arahkan ke index.php
+RewriteRule ^(.*)$ index.php [QSA,L]

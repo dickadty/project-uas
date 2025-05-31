@@ -2,7 +2,6 @@
 // Redirect langsung ke halaman utama
 // header("Location: pages/home.php");
 // exit;
-
 ?>
 
 <!DOCTYPE html>
@@ -59,3 +58,7 @@
 </script>
 </body>
 </html>
+
+
+$router = require 'routes/api.php';
+$router->run();
