@@ -10,6 +10,7 @@ class UserController
 {
     public function index()
     {
+        // Judul halaman
         $data['judul'] = 'Daftar Pembagian Qurban';
 
         // Set jumlah data per halaman dan ambil halaman saat ini dari URL
@@ -24,7 +25,7 @@ class UserController
         $data['totalPages'] = ceil($totalUsers / $limit);
         $data['currentPage'] = $page;
 
-        // Ambil data berdasarkan role (Warga, Panitia, Mudhohi)
+        // Ambil data berdasarkan role
         $data['warga'] = User::getByRole('warga', $page, $limit);
         $data['panitia'] = User::getByRole('panitia', $page, $limit);
         $data['berqurban'] = User::getByRole('berqurban', $page, $limit);

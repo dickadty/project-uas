@@ -4,7 +4,6 @@ require_once 'app/controllers/UserController.php';
 
 use App\Controllers\UserController;
 
-// Ambil data dari controller
 $controller = new UserController();
 $data = $controller->index(); // Ambil data user berdasarkan role
 
@@ -34,21 +33,21 @@ ob_start();
                     <tbody>
                         <?php foreach ($data['warga'] as $warga): ?>
                             <tr>
-                                <td><?= htmlspecialchars($warga['username']) ?></td>
+                                <td><?= htmlspecialchars($warga['nama']) ?></td>
                                 <td><span class="label label-primary"><?= htmlspecialchars($warga['status']) ?></span></td>
                                 <td>
                                     <!-- Tombol Lihat -->
-                                    <a href="view_user.php?id=<?= $warga['id'] ?>" class="me-2" title="Lihat User">
+                                    <a href="view_user.php?id=<?= $warga['id_warga'] ?>" class="me-2" title="Lihat User">
                                         <i class="fa fa-eye text-info" style="font-size: 20px;"></i>
                                     </a>
 
                                     <!-- Tombol Edit -->
-                                    <a href="edit_user.php?id=<?= $warga['id'] ?>" class="me-2" title="Edit User">
+                                    <a href="edit_user.php?id=<?= $warga['id_warga'] ?>" class="me-2" title="Edit User">
                                         <i class="fa fa-edit text-warning" style="font-size: 20px;"></i>
                                     </a>
 
                                     <!-- Tombol Hapus -->
-                                    <a href="hapus_user.php?id=<?= $warga['id'] ?>" onclick="return confirm('Yakin ingin menghapus user ini?');" title="Hapus User">
+                                    <a href="hapus_user.php?id=<?= $warga['id_warga'] ?>" onclick="return confirm('Yakin ingin menghapus user ini?');" title="Hapus User">
                                         <i class="fa fa-trash text-danger" style="font-size: 20px;"></i>
                                     </a>
                                 </td>
@@ -82,21 +81,21 @@ ob_start();
                     <tbody>
                         <?php foreach ($data['panitia'] as $panitia): ?>
                             <tr>
-                                <td><?= htmlspecialchars($panitia['username']) ?></td>
+                                <td><?= htmlspecialchars($panitia['nama']) ?></td>
                                 <td><span class="label label-warning"><?= htmlspecialchars($panitia['status']) ?></span></td>
                                 <td>
                                     <!-- Tombol Lihat -->
-                                    <a href="view_user.php?id=<?= $panitia['id'] ?>" class="me-2" title="Lihat User">
+                                    <a href="view_user.php?id=<?= $panitia['id_warga'] ?>" class="me-2" title="Lihat User">
                                         <i class="fa fa-eye text-info" style="font-size: 20px;"></i>
                                     </a>
 
                                     <!-- Tombol Edit -->
-                                    <a href="edit_user.php?id=<?= $panitia['id'] ?>" class="me-2" title="Edit User">
+                                    <a href="edit_user.php?id=<?= $panitia['id_warga'] ?>" class="me-2" title="Edit User">
                                         <i class="fa fa-edit text-warning" style="font-size: 20px;"></i>
                                     </a>
 
                                     <!-- Tombol Hapus -->
-                                    <a href="hapus_user.php?id=<?= $panitia['id'] ?>" onclick="return confirm('Yakin ingin menghapus user ini?');" title="Hapus User">
+                                    <a href="hapus_user.php?id=<?= $panitia['id_warga'] ?>" onclick="return confirm('Yakin ingin menghapus user ini?');" title="Hapus User">
                                         <i class="fa fa-trash text-danger" style="font-size: 20px;"></i>
                                     </a>
                                 </td>
@@ -130,7 +129,7 @@ ob_start();
                     <tbody>
                         <?php foreach ($data['berqurban'] as $berqurban): ?>
                             <tr>
-                                <td><?= htmlspecialchars($berqurban['username']) ?></td>
+                                <td><?= htmlspecialchars($berqurban['nama']) ?></td>
                                 <td><span class="label label-success"><?= htmlspecialchars($berqurban['status']) ?></span></td>
                                 <td>
                                     <!-- Tombol Lihat -->

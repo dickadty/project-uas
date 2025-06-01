@@ -8,12 +8,10 @@ $controller = new UserController();
 $users = $controller->index();
 ob_start();
 ?>
-
 <div class="row">
     <div class="col-lg-3">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-
                 <h5>Total Warga</h5>
             </div>
             <div class="ibox-content">
@@ -124,14 +122,14 @@ ob_start();
                             <?php foreach ($users['users'] as $i => $row): ?>
                                 <tr>
                                     <td><?= $i + 1 ?></td>
+                                    <td><?= htmlspecialchars($row['nama']) ?></td>
                                     <td><?= htmlspecialchars(ucwords($row['role'])) ?></td>
-                                    <td><?= htmlspecialchars($row['username']) ?></td>
 
                                     <td>
-                                        <a href="edit_user.php?id=<?= $row['id'] ?>" class="me-2">
+                                        <a href="edit_user.php?id=<?= $row['id_users'] ?>" class="me-2">
                                             <i class="fa fa-edit text-warning"></i>
                                         </a>
-                                        <a href="hapus_user.php?id=<?= $row['id'] ?>" onclick="return confirm('Yakin ingin menghapus user ini?');">
+                                        <a href="hapus_user.php?id=<?= $row['id_users'] ?>" onclick="return confirm('Yakin ingin menghapus user ini?');">
                                             <i class="fa fa-trash text-danger"></i>
                                         </a>
                                     </td>

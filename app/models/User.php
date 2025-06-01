@@ -14,9 +14,19 @@ class User
         // Menghitung offset untuk pagination
         $offset = ($page - 1) * $limit;
 
-        // Query untuk mengambil semua user dengan limit dan offset
-        $query = "SELECT * FROM users LIMIT $limit OFFSET $offset";
-        $result = $connection->query($query);
+        // Query untuk mengambil semua user dengan nama dari tabel warga menggunakan JOIN
+        $query = "
+            SELECT u.id_users, u.nik, u.role, w.nama
+            FROM users u
+            LEFT JOIN warga w ON w.nik = u.nik
+            LIMIT ? OFFSET ?
+        ";
+        
+        // Menggunakan prepared statement untuk menghindari SQL Injection
+        $stmt = $connection->prepare($query);
+        $stmt->bind_param("ii", $limit, $offset);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
         if (!$result) {
             error_log("Query Error: " . $connection->error);
@@ -47,7 +57,7 @@ class User
         return $row['total'];
     }
 
-    // Fungsi untuk mendapatkan user berdasarkan role
+    // Fungsi untuk mendapatkan user berdasarkan role dengan pagination
     public static function getByRole($role, $page = 1, $limit = 10)
     {
         $connection = getConnection();
@@ -55,8 +65,17 @@ class User
         // Menghitung offset untuk pagination
         $offset = ($page - 1) * $limit;
 
-        // Query untuk mengambil user berdasarkan role
-        $stmt = $connection->prepare("SELECT * FROM users WHERE role = ? LIMIT ? OFFSET ?");
+        // Query untuk mengambil user berdasarkan role dengan nama dari tabel warga
+        $query = "
+            SELECT u.id_users, u.nik, u.role, w.nama
+            FROM users u
+            LEFT JOIN warga w ON w.nik = u.nik
+            WHERE u.role = ?
+            LIMIT ? OFFSET ?
+        ";
+        
+        // Menggunakan prepared statement untuk menghindari SQL Injection
+        $stmt = $connection->prepare($query);
         $stmt->bind_param("sii", $role, $limit, $offset);
         $stmt->execute();
         $result = $stmt->get_result();
