@@ -3,16 +3,15 @@ if (isset($_POST['nik'])) {
     require_once __DIR__ . '/../../config/db.php';
     $db = getConnection();
 
-    // ------ ambil input ------
     $nama       = $_POST['nama'];
     $nik        = $_POST['nik'];
     $password   = $_POST['password'];
     $no_hp      = $_POST['no_hp'];
     $no_rumah   = $_POST['no_rumah'];
-    $role       = $_POST['role'];          // warga | berqurban | panitia | admin
+    $role       = $_POST['role'];       
     $nama_hewan = $_POST['nama_hewan'] ?? null;
 
-    // ------ users ------
+
     $stmt = $db->prepare(
         "INSERT INTO users (nik, password, role) VALUES (?, ?, ?)"
     );
@@ -21,7 +20,6 @@ if (isset($_POST['nik'])) {
     $stmt->execute();
     $stmt->close();
 
-    // ------ warga ------
     $is_panitia = ($role === 'panitia')   ? 1 : 0;
     $is_qurban  = ($role === 'berqurban') ? 1 : 0;
     $is_admin   = ($role === 'admin')     ? 1 : 0;
@@ -31,7 +29,6 @@ if (isset($_POST['nik'])) {
                             is_panitia, is_qurban, is_admin)
          VALUES (?, ?, ?, ?, ?, ?, ?)"
     );
-    /*  s s s s i i i   */
     $stmt->bind_param(
         "ssssiis",
         $nik,
@@ -43,13 +40,10 @@ if (isset($_POST['nik'])) {
         $is_admin
     );
     $stmt->execute();
-    /* id_warga hasil AUTO_INCREMENT */
     $id_warga = $stmt->insert_id;
     $stmt->close();
 
-    // ------ qurban (hanya jika role = berqurban) ------
     if ($role === 'berqurban' && $nama_hewan !== null) {
-        // cari id_hewan
         $stmt = $db->prepare(
             "SELECT id_hewan FROM hewan WHERE nama_hewan = ? LIMIT 1"
         );
@@ -66,7 +60,6 @@ if (isset($_POST['nik'])) {
                 "INSERT INTO qurban (id_hewan, id_warga, status_pembayaran)
                  VALUES (?, ?, ?)"
             );
-            /*  i i s  */
             $stmt->bind_param(
                 "iis",
                 $id_hewan,
