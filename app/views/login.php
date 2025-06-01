@@ -23,8 +23,7 @@ if (isset($_POST['nik'])) {
                 $data = $result->fetch_assoc();
     
                 $_SESSION['nama'] = $data['nama'];
-                $base = rtrim(dirname($_SERVER['PHP_SELF']), '/');
-                header("Location: {$base}/dashboard");
+                header("Location: dashboard");
                 exit;
             }
         }
@@ -76,7 +75,7 @@ if (isset($_POST['nik'])) {
 
                 <a href="#"><small>Forgot password?</small></a>
                 <p class="text-muted text-center"><small>Do not have an account?</small></p>
-                <a class="btn btn-sm btn-white btn-block" href="register.html">Create an account</a>
+                <a class="btn btn-sm btn-white btn-block" href="register">Create an account</a>
             </form>
         </div>
     </div>
