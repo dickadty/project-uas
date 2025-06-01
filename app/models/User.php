@@ -6,14 +6,15 @@ require_once __DIR__ . '/../../config/db.php';
 
 class User
 {
+    // Fungsi untuk mengambil semua user dengan pagination
     public static function getAllUsers($page = 1, $limit = 10)
     {
         $connection = getConnection();
 
-        // Menghitung offset
+        // Menghitung offset untuk pagination
         $offset = ($page - 1) * $limit;
 
-        // Mengubah query untuk menggunakan LIMIT dan OFFSET
+        // Query untuk mengambil semua user dengan limit dan offset
         $query = "SELECT * FROM users LIMIT $limit OFFSET $offset";
         $result = $connection->query($query);
 
@@ -30,7 +31,7 @@ class User
         return $users;
     }
 
-    // Menambahkan method untuk mendapatkan total pengguna untuk perhitungan pagination
+    // Fungsi untuk mendapatkan total jumlah pengguna untuk pagination
     public static function getTotalUsers()
     {
         $connection = getConnection();
@@ -44,5 +45,27 @@ class User
 
         $row = $result->fetch_assoc();
         return $row['total'];
+    }
+
+    // Fungsi untuk mendapatkan user berdasarkan role
+    public static function getByRole($role, $page = 1, $limit = 10)
+    {
+        $connection = getConnection();
+
+        // Menghitung offset untuk pagination
+        $offset = ($page - 1) * $limit;
+
+        // Query untuk mengambil user berdasarkan role
+        $stmt = $connection->prepare("SELECT * FROM users WHERE role = ? LIMIT ? OFFSET ?");
+        $stmt->bind_param("sii", $role, $limit, $offset);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        $users = [];
+        while ($row = $result->fetch_assoc()) {
+            $users[] = $row;
+        }
+
+        return $users;
     }
 }

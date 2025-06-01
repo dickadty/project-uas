@@ -24,4 +24,6 @@ class Qurban
 
         return $qurban;
     }
+
+    
 }

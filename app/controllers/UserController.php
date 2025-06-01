@@ -24,6 +24,11 @@ class UserController
         $data['totalPages'] = ceil($totalUsers / $limit);
         $data['currentPage'] = $page;
 
+        // Ambil data berdasarkan role (Warga, Panitia, Mudhohi)
+        $data['warga'] = User::getByRole('warga', $page, $limit);
+        $data['panitia'] = User::getByRole('panitia', $page, $limit);
+        $data['berqurban'] = User::getByRole('berqurban', $page, $limit);
+
         return $data;
     }
 }

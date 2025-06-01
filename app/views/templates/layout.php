@@ -10,14 +10,14 @@
     <div id="wrapper">
         <?php include_once __DIR__ . '/../../../includes/navbar.php'; ?>
         <!-- Sidebar -->
-        <?php include_once __DIR__ . '/../../../includes/sidebar.php'; ?> <!-- Memasukkan sidebar -->
+        <?php include_once __DIR__ . '/../../../includes/sidebar_admin.php'; ?> <!-- Memasukkan sidebar -->
 
         <div id="page-wrapper" class="gray-bg">
             <!-- Page Content -->
             <div class="row border-bottom">
                 <div class="col-lg-10">
                     <!-- Judul Halaman, bisa diganti sesuai dengan konten yang dimasukkan -->
-                    <h2><?= isset($user) ? $user : 'Dashboard' ?></h2>
+                    <h2><?= isset($user) ? $user : 'Dashboard Admin' ?></h2>
 
                 </div>
             </div>
