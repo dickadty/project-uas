@@ -1,41 +1,46 @@
 <?php
+
+require_once __DIR__ . '/../../config/db.php';
+$db = getConnection();
+
 if (isset($_POST['nik'])) {
-    require_once __DIR__ . '/../../config/db.php';
-    $db = getConnection();
 
     $nama       = $_POST['nama'];
     $nik        = $_POST['nik'];
     $password   = $_POST['password'];
     $no_hp      = $_POST['no_hp'];
     $no_rumah   = $_POST['no_rumah'];
-    $role       = $_POST['role'];
+    $role       = $_POST['role'];  
     $jenis_hewan = $_POST['jenis_hewan'] ?? null;
+
+    // Hash password untuk keamanan
+    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
     // Insert ke tabel users
     $stmt = $db->prepare("INSERT INTO users (nik, password, role) VALUES (?, ?, ?)");
-    $hashed_password = password_hash($password, PASSWORD_BCRYPT);
     $stmt->bind_param("sss", $nik, $hashed_password, $role);
     $stmt->execute();
     $stmt->close();
 
-    // Tentukan role
+    // Tentukan role untuk tabel warga
     $is_panitia = ($role === 'panitia') ? 1 : 0;
     $is_qurban  = ($role === 'berqurban') ? 1 : 0;
     $is_admin   = ($role === 'admin') ? 1 : 0;
+    $is_warga   = ($role === 'warga') ? 1 : 0; // Menambahkan is_warga
 
     // Insert ke tabel warga
     $stmt = $db->prepare(
-        "INSERT INTO warga (nik, nama, no_hp, no_rumah, is_panitia, is_qurban, is_admin)
-         VALUES (?, ?, ?, ?, ?, ?, ?)"
+        "INSERT INTO warga (nik, nama, no_hp, no_rumah, is_panitia, is_qurban, is_admin, is_warga)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
     );
-    $stmt->bind_param("ssssiis", $nik, $nama, $no_hp, $no_rumah, $is_panitia, $is_qurban, $is_admin);
+    $stmt->bind_param("ssssiiii", $nik, $nama, $no_hp, $no_rumah, $is_panitia, $is_qurban, $is_admin, $is_warga);
     $stmt->execute();
-    $id_warga = $stmt->insert_id; // ID Warga untuk referensi
+    $id_warga = $stmt->insert_id;
     $stmt->close();
 
-    // Jika role 'berqurban' dan jenis_hewan tidak null, masukkan ke tabel qurban
+    $id_qurban = null;
     if ($role === 'berqurban' && $jenis_hewan !== null) {
-        // Cari id_hewan berdasarkan jenis_hewan
+
         $stmt = $db->prepare("SELECT id_hewan FROM hewan WHERE jenis_hewan = ? LIMIT 1");
         $stmt->bind_param("s", $jenis_hewan);
         $stmt->execute();
@@ -44,19 +49,39 @@ if (isset($_POST['nik'])) {
         $stmt->close();
 
         if ($found) {
-            // Status pembayaran
             $status_pembayaran = 'belum selesai';
 
-            // Insert data ke tabel qurban
             $stmt = $db->prepare(
                 "INSERT INTO qurban (id_hewan, id_warga, status_pembayaran)
                  VALUES (?, ?, ?)"
             );
             $stmt->bind_param("iis", $id_hewan, $id_warga, $status_pembayaran);
             $stmt->execute();
+            $id_qurban = $stmt->insert_id;  
             $stmt->close();
         }
     }
+
+    if ($id_qurban === null && $role === 'warga') {
+        $id_qurban = NULL; 
+    }
+
+    $jumlah_kg = 2; 
+    if ($role === 'berqurban') {
+        $jumlah_kg = 6; 
+    }
+
+    $status_ambil = 0;
+
+    $qr_token = uniqid('qr_', true); 
+
+    $stmt = $db->prepare(
+        "INSERT INTO pembagian_qurban (id_warga, id_qurban, jumlah_kg, status_ambil, qr_token)
+         VALUES (?, ?, ?, ?, ?)"
+    );
+    $stmt->bind_param("iiiss", $id_warga, $id_qurban, $jumlah_kg, $status_ambil, $qr_token);
+    $stmt->execute();
+    $stmt->close();
 
     header("Location: login");
     exit;
@@ -70,7 +95,6 @@ if (isset($_POST['nik'])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Daftar Akun | Qurban</title>
-
     <?php include_once __DIR__ . '/../../includes/header.php'; ?>
 </head>
 
