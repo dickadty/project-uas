@@ -8,64 +8,51 @@ if (isset($_POST['nik'])) {
     $password   = $_POST['password'];
     $no_hp      = $_POST['no_hp'];
     $no_rumah   = $_POST['no_rumah'];
-    $role       = $_POST['role'];       
-    $nama_hewan = $_POST['nama_hewan'] ?? null;
+    $role       = $_POST['role'];
+    $jenis_hewan = $_POST['jenis_hewan'] ?? null;
 
-
-    $stmt = $db->prepare(
-        "INSERT INTO users (nik, password, role) VALUES (?, ?, ?)"
-    );
+    // Insert ke tabel users
+    $stmt = $db->prepare("INSERT INTO users (nik, password, role) VALUES (?, ?, ?)");
     $hashed_password = password_hash($password, PASSWORD_BCRYPT);
     $stmt->bind_param("sss", $nik, $hashed_password, $role);
     $stmt->execute();
     $stmt->close();
 
-    $is_panitia = ($role === 'panitia')   ? 1 : 0;
+    // Tentukan role
+    $is_panitia = ($role === 'panitia') ? 1 : 0;
     $is_qurban  = ($role === 'berqurban') ? 1 : 0;
-    $is_admin   = ($role === 'admin')     ? 1 : 0;
+    $is_admin   = ($role === 'admin') ? 1 : 0;
 
+    // Insert ke tabel warga
     $stmt = $db->prepare(
-        "INSERT INTO warga (nik, nama, no_hp, no_rumah,
-                            is_panitia, is_qurban, is_admin)
+        "INSERT INTO warga (nik, nama, no_hp, no_rumah, is_panitia, is_qurban, is_admin)
          VALUES (?, ?, ?, ?, ?, ?, ?)"
     );
-    $stmt->bind_param(
-        "ssssiis",
-        $nik,
-        $nama,
-        $no_hp,
-        $no_rumah,
-        $is_panitia,
-        $is_qurban,
-        $is_admin
-    );
+    $stmt->bind_param("ssssiis", $nik, $nama, $no_hp, $no_rumah, $is_panitia, $is_qurban, $is_admin);
     $stmt->execute();
-    $id_warga = $stmt->insert_id;
+    $id_warga = $stmt->insert_id; // ID Warga untuk referensi
     $stmt->close();
 
-    if ($role === 'berqurban' && $nama_hewan !== null) {
-        $stmt = $db->prepare(
-            "SELECT id_hewan FROM hewan WHERE nama_hewan = ? LIMIT 1"
-        );
-        $stmt->bind_param("s", $nama_hewan);
+    // Jika role 'berqurban' dan jenis_hewan tidak null, masukkan ke tabel qurban
+    if ($role === 'berqurban' && $jenis_hewan !== null) {
+        // Cari id_hewan berdasarkan jenis_hewan
+        $stmt = $db->prepare("SELECT id_hewan FROM hewan WHERE jenis_hewan = ? LIMIT 1");
+        $stmt->bind_param("s", $jenis_hewan);
         $stmt->execute();
         $stmt->bind_result($id_hewan);
         $found = $stmt->fetch();
         $stmt->close();
 
         if ($found) {
+            // Status pembayaran
             $status_pembayaran = 'belum selesai';
 
+            // Insert data ke tabel qurban
             $stmt = $db->prepare(
                 "INSERT INTO qurban (id_hewan, id_warga, status_pembayaran)
                  VALUES (?, ?, ?)"
             );
-            $stmt->bind_param(
-                "iis",
-                $id_hewan,
-                $id_warga,
-                $status_pembayaran
-            );
+            $stmt->bind_param("iis", $id_hewan, $id_warga, $status_pembayaran);
             $stmt->execute();
             $stmt->close();
         }
@@ -75,7 +62,6 @@ if (isset($_POST['nik'])) {
     exit;
 }
 ?>
-
 
 <!DOCTYPE html>
 <html>
@@ -126,10 +112,10 @@ if (isset($_POST['nik'])) {
                 </div>
 
                 <div class="form-group" id="hewan-qurban-group" style="display: none;">
-                    <select class="form-control" name="nama_hewan" id="nama_hewan">
-                        <option value="" disabled selected hidden>Pilih Hewan Qurban </option>
-                        <option value="kambing">Kambing Rp 2.750.000 </option>
-                        <option value="sapi">Sapi Rp 3.010.000 </option>
+                    <select class="form-control" name="jenis_hewan" id="jenis_hewan">
+                        <option value="" disabled selected hidden>Pilih Hewan Qurban</option>
+                        <option value="kambing">Kambing Rp 2.750.000</option>
+                        <option value="sapi">Sapi Rp 3.010.000</option>
                     </select>
                 </div>
 
@@ -148,10 +134,10 @@ if (isset($_POST['nik'])) {
             $('#role').change(function() {
                 if ($(this).val() === 'berqurban') {
                     $('#hewan-qurban-group').show();
-                    $('#hewan_hewan').attr('required', true);
+                    $('#jenis_hewan').attr('required', true);
                 } else {
                     $('#hewan-qurban-group').hide();
-                    $('#hewan_hewan').removeAttr('required');
+                    $('#jenis_hewan').removeAttr('required');
                 }
             });
         });

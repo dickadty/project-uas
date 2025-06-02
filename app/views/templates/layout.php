@@ -8,7 +8,6 @@
 <body>
 
     <div id="wrapper">
-        <?php include_once __DIR__ . '/../../../includes/navbar.php'; ?>
         <!-- Sidebar -->
         <?php include_once __DIR__ . '/../../../includes/sidebar_admin.php'; ?> <!-- Memasukkan sidebar -->
 
