@@ -1,60 +1,92 @@
 <?php
 require_once 'config/db.php';
+require_once 'app/controllers/KeuanganController.php';
+require_once 'app/controllers/WargaController.php';
+require_once 'app/controllers/QurbanController.php';
+require_once 'app/controllers/HewanController.php';
 require_once 'app/controllers/UserController.php';
 
 use App\Controllers\UserController;
+use App\Controllers\KeuanganController;
+use App\Controllers\WargaController;
+use App\Controllers\QurbanController;
+use App\Controllers\HewanController;
 
-$controller = new UserController();
-$users = $controller->index();
+
+// Initialize controllers
+$controllerKeuangan = new KeuanganController();
+$controllerWarga = new WargaController();
+$controllerQurban = new QurbanController();
+$controllerHewan = new HewanController();
+$controllerUser = new UserController();
+
+// Get data from controllers
+$keuanganData = $controllerKeuangan->index();
+$wargaData = $controllerWarga->index();
+$qurbanData = $controllerQurban->index();
+$hewanData = $controllerHewan->index();
+$users = $controllerUser->index();
+
+// Extract data for display
+$totalDana = $keuanganData['totalDana'];
+$totalWarga = count($wargaData['warga']);
+$totalQurban = count($qurbanData['qurban']);
+$totalDaging = $hewanData['totalBerat'];
 ob_start();
 ?>
 <div class="row">
+    <!-- Total Warga -->
     <div class="col-lg-3">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Total Warga</h5>
             </div>
             <div class="ibox-content">
-                <h1 class="no-margins">60</h1>
+                <h1 class="no-margins"><?= $totalWarga ?></h1> <!-- Display total warga -->
                 <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
-                <small>Total income</small>
+                <small>Total warga terdaftar</small>
             </div>
         </div>
     </div>
+
+    <!-- Total Dana -->
     <div class="col-lg-3">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Total Dana</h5>
             </div>
             <div class="ibox-content">
-                <h1 class="no-margins">Rp 2.000.000</h1>
+                <h1 class="no-margins">Rp <?= number_format($totalDana, 2, ',', '.') ?></h1>
                 <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
-                <small>New orders</small>
+                <small>Total dana masuk</small>
             </div>
         </div>
     </div>
+
+    <!-- Total Qurban -->
     <div class="col-lg-3">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-                <h5>Hewan Qurban</h5>
+                <h5>Total Qurban</h5>
             </div>
             <div class="ibox-content">
-                <h1 class="no-margins">106,120</h1>
-                <div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>
-                <small>New visits</small>
+                <h1 class="no-margins"><?= $totalQurban ?></h1> <!-- Display total qurban -->
+                <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
+                <small>Total qurban terdaftar</small>
             </div>
         </div>
     </div>
+
+    <!-- Total Daging -->
     <div class="col-lg-3">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
-
                 <h5>Total Daging</h5>
             </div>
             <div class="ibox-content">
-                <h1 class="no-margins">100 Kg</h1>
+                <h1 class="no-margins"><?= $totalDaging ?> Kg</h1> <!-- Display total berat daging -->
                 <div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>
-                <small>In first month</small>
+                <small>Total berat daging (hewan qurban)</small>
             </div>
         </div>
     </div>
@@ -112,7 +144,7 @@ ob_start();
                     <thead class="table-dark">
                         <tr>
                             <th>No</th>
-                            <th>Username</th>
+                            <th>Nama</th>
                             <th>Role</th>
                             <th>Aksi</th>
                         </tr>
