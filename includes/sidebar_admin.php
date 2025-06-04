@@ -34,7 +34,7 @@
                 <a href="qurban"><i class="fa fa-user-circle" aria-hidden="true"></i> <span class="nav-label">Data Peserta</span></a>
             </li>
             <li>
-                <a href="keuangan.html"><i class="fa fa-dollar"></i> <span class="nav-label">Keuangan</span></a>
+                <a href="keuangan"><i class="fa fa-dollar"></i> <span class="nav-label">Keuangan</span></a>
             </li>
             <li>
                 <a href="pembagian.html"><i class="fa fa-handshake-o" aria-hidden="true"></i> <span class="nav-label">Pembagian Daging</span></a>

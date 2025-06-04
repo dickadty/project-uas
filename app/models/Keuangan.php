@@ -24,4 +24,27 @@ class Keuangan
 
         return $keuangan;
     }
+
+    public static function getAllTransactions()
+    {
+        $connection = getConnection();
+        $query = "
+            SELECT k.id_keuangan, k.jenis_transaksi, k.deskripsi, k.tanggal_transaksi, 
+                   w.nama AS wanama
+            FROM keuangan k
+            LEFT JOIN warga w ON k.id_qurban = w.id_warga"; 
+        $result = $connection->query($query);
+
+        if (!$result) {
+            error_log("Query Error: " . $connection->error);
+            return [];
+        }
+
+        $keuangan = [];
+        while ($row = $result->fetch_assoc()) {
+            $keuangan[] = $row;  
+        }
+
+        return $keuangan;
+    }
 }

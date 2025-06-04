@@ -10,9 +10,6 @@ class UserController
 {
     public function index()
     {
-        // Judul halaman
-        $data['judul'] = 'Daftar Pembagian Qurban';
-
         $limit = 10;
         $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
@@ -27,5 +24,22 @@ class UserController
         $data['berqurban'] = User::getByRole('berqurban', $page, $limit);
 
         return $data;
+    }
+
+    public function create()
+    {
+        $data['judul'] = 'Tambah User';
+        return $data;
+    }
+
+    public function store()
+    {
+        $nama = $_POST['nama'];
+        $role = $_POST['role'];
+        $password = $_POST['password'];
+        $user = new User();
+        $user->create($nama, $role, $password);
+        header('Location: /users');
+        exit();
     }
 }

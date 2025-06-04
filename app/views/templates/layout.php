@@ -16,7 +16,8 @@
             <div class="row border-bottom">
                 <div class="col-lg-10">
                     <!-- Judul Halaman, bisa diganti sesuai dengan konten yang dimasukkan -->
-                    <h2><?= isset($user) ? $user : 'Dashboard Admin' ?></h2>
+                    <h2><?= isset($judulHalaman) ? $judulHalaman : 'Dashboard Admin' ?></h2>
+
 
                 </div>
             </div>

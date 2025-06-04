@@ -63,21 +63,19 @@ ob_start();
         </div>
     </div>
 
-    <!-- Total Qurban -->
     <div class="col-lg-3">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
                 <h5>Total Qurban</h5>
             </div>
             <div class="ibox-content">
-                <h1 class="no-margins"><?= $totalQurban ?></h1> <!-- Display total qurban -->
+                <h1 class="no-margins"><?= $totalQurban ?></h1> 
                 <div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>
                 <small>Total qurban terdaftar</small>
             </div>
         </div>
     </div>
 
-    <!-- Total Daging -->
     <div class="col-lg-3">
         <div class="ibox float-e-margins">
             <div class="ibox-title">
@@ -136,7 +134,7 @@ ob_start();
                     </div>
                 </div>
             </div>
-            <a href="tambah_user.php" class="btn btn-primary btn-sm mb-3">+ Tambah User</a>
+            <a href="users/create" class="btn btn-primary btn-sm mb-3">+ Tambah User</a>
 
             <!-- Tabel User -->
             <div class="table-responsive">

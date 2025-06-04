@@ -1,5 +1,4 @@
 <?php
-
 require_once __DIR__ . '/../../config/db.php';
 $db = getConnection();
 
@@ -10,7 +9,7 @@ if (isset($_POST['nik'])) {
     $password   = $_POST['password'];
     $no_hp      = $_POST['no_hp'];
     $no_rumah   = $_POST['no_rumah'];
-    $role       = $_POST['role'];  
+    $role       = $_POST['role'];
     $jenis_hewan = $_POST['jenis_hewan'] ?? null;
 
     // Hash password untuk keamanan
@@ -35,12 +34,13 @@ if (isset($_POST['nik'])) {
     );
     $stmt->bind_param("ssssiiii", $nik, $nama, $no_hp, $no_rumah, $is_panitia, $is_qurban, $is_admin, $is_warga);
     $stmt->execute();
-    $id_warga = $stmt->insert_id;
+    $id_warga = $stmt->insert_id;  // Ambil ID warga yang baru dimasukkan
     $stmt->close();
 
     $id_qurban = null;
     if ($role === 'berqurban' && $jenis_hewan !== null) {
 
+        // Ambil id_hewan dari tabel hewan berdasarkan jenis_hewan
         $stmt = $db->prepare("SELECT id_hewan FROM hewan WHERE jenis_hewan = ? LIMIT 1");
         $stmt->bind_param("s", $jenis_hewan);
         $stmt->execute();
@@ -51,30 +51,35 @@ if (isset($_POST['nik'])) {
         if ($found) {
             $status_pembayaran = 'belum selesai';
 
+            // Insert data ke tabel qurban
             $stmt = $db->prepare(
                 "INSERT INTO qurban (id_hewan, id_warga, status_pembayaran)
                  VALUES (?, ?, ?)"
             );
             $stmt->bind_param("iis", $id_hewan, $id_warga, $status_pembayaran);
             $stmt->execute();
-            $id_qurban = $stmt->insert_id;  
+            $id_qurban = $stmt->insert_id;  // Ambil id_qurban yang baru dimasukkan
             $stmt->close();
         }
     }
 
+    // Jika id_qurban adalah null dan role = warga, set id_qurban menjadi NULL
     if ($id_qurban === null && $role === 'warga') {
-        $id_qurban = NULL; 
+        $id_qurban = NULL;
     }
 
-    $jumlah_kg = 2; 
+    // Tentukan jumlah_kg berdasarkan role
+    $jumlah_kg = 2;
     if ($role === 'berqurban') {
-        $jumlah_kg = 6; 
+        $jumlah_kg = 6;
     }
 
-    $status_ambil = 0;
+    $status_ambil = 0;  // Status ambil diatur ke 0 (belum diambil)
 
-    $qr_token = uniqid('qr_', true); 
+    // Membuat QR token secara otomatis
+    $qr_token = uniqid('qr_', true);
 
+    // Insert data ke tabel pembagian_qurban
     $stmt = $db->prepare(
         "INSERT INTO pembagian_qurban (id_warga, id_qurban, jumlah_kg, status_ambil, qr_token)
          VALUES (?, ?, ?, ?, ?)"
@@ -83,10 +88,12 @@ if (isset($_POST['nik'])) {
     $stmt->execute();
     $stmt->close();
 
+    // Redirect ke halaman login setelah registrasi dan insert selesai
     header("Location: login");
     exit;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
