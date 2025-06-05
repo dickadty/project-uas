@@ -12,8 +12,8 @@
         <div>FAQ</div>
         <div>Dashboard</div>
         <br>
-        <div>Login</div>
-        <div>Register</div>
+        <div><a href="login">Login</a></div>
+        <div><a href="register">Register</a></div>
     </div>
     <div id="background"></div>
     <div class="overlay"></div>
