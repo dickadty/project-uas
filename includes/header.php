@@ -7,8 +7,5 @@
     <link href='<?php echo "$basePath/public/assets/css/style.css" ?>' rel="stylesheet">
     <link href="/public/assets/font-awesome/css/font-awesome.css" rel="stylesheet">
 
-    <?php
-    if (strpos($_SERVER['REQUEST_URI'], 'users/create') !== false): ?>
-        
-    <?php endif; ?>
+
 </head>

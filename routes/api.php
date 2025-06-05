@@ -11,6 +11,7 @@ $router->addRoute('/keuangan', '', 'GET', '/../app/views/keuangan/index.php');
 $router->addRoute('/qurban', '', 'GET', '/../app/views/qurban/index.php');
 $router->addRoute('/warga', '', 'GET', '/../app/views/warga/index.php');
 $router->addRoute('/pembagian', '', 'GET', '/../app/views/pembagian_qurban/index.php');
+$router->addRoute('/qrcode', '', 'GET', '/../app/views/qrcode/index.php');
 $router->addRoute('/', '', 'GET', '/../app/views/landing.php');
 $router->addRoute('/login', '', 'GET', '/../app/views/login.php');
 $router->addRoute('/register', '', 'GET', '/../app/views/register.php');

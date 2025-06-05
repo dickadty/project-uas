@@ -40,7 +40,7 @@
                 <a href='<?php echo "$basePath/pembagian" ?>'><i class="fa fa-handshake-o" aria-hidden="true"></i> <span class="nav-label">Pembagian Daging</span></a>
             </li>
             <li>
-                <a href="qrcode.html"><i class="fa fa-plus-square"></i> <span class="nav-label">QR Code</span></a>
+                <a href="qrcode"><i class="fa fa-plus-square"></i> <span class="nav-label">QR Code</span></a>
             </li>
             <li>
                 <a href="laporan.html"><i class="fa fa-file-pdf-o"></i> <span class="nav-label">Laporan</span></a>

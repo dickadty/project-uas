@@ -94,7 +94,9 @@ if (isset($_POST['nik'])) {
 }
 ?>
 
-
+<?php
+$basePath = 'http://' . $_SERVER['HTTP_HOST'] . '/project-uas';
+include_once __DIR__ . '/../../../includes/header.php'; ?>
 <!DOCTYPE html>
 <html>
 

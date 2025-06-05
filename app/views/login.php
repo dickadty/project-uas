@@ -8,7 +8,7 @@ if (isset($_POST['nik'])) {
 
     $stmt = $db->prepare("SELECT password FROM `users` WHERE nik=?");
     $stmt->bind_param("s", $nik);
-    
+
     if ($stmt->execute()) {
         $result = $stmt->get_result();
         if ($result->num_rows > 0) {
@@ -21,7 +21,7 @@ if (isset($_POST['nik'])) {
                 $stmt->execute();
                 $result = $stmt->get_result();
                 $data = $result->fetch_assoc();
-    
+
                 $_SESSION['nama'] = $data['nama'];
                 header("Location: dashboard");
                 exit;
@@ -30,24 +30,21 @@ if (isset($_POST['nik'])) {
     }
 }
 ?>
-
+<?php
+$basePath = 'http://' . $_SERVER['HTTP_HOST'] . '/project-uas';
+include_once __DIR__ . '/../../../includes/header.php'; ?>
 <!DOCTYPE html>
 <html>
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>INSPINIA | Login</title>
-
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <?php include_once __DIR__ . '/../../includes/header.php'; ?> <!-- Memasukkan header -->
-
+    <?php include_once __DIR__ . '/../../includes/header.php'; ?>
 </head>
 
 <body class="gray-bg">
