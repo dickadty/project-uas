@@ -28,16 +28,16 @@
             </li>
 
             <li>
-                <a href="users"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
+                <a href='<?php echo "$basePath/users" ?>'><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
             </li>
             <li>
-                <a href="qurban"><i class="fa fa-user-circle" aria-hidden="true"></i> <span class="nav-label">Data Peserta</span></a>
+                <a href='<?php echo "$basePath/qurban" ?>'><i class="fa fa-user-circle" aria-hidden="true"></i> <span class="nav-label">Data Peserta</span></a>
             </li>
             <li>
-                <a href="keuangan"><i class="fa fa-dollar"></i> <span class="nav-label">Keuangan</span></a>
+                <a href='<?php echo "$basePath/keuangan" ?>'><i class="fa fa-dollar"></i> <span class="nav-label">Keuangan</span></a>
             </li>
             <li>
-                <a href="pembagian.html"><i class="fa fa-handshake-o" aria-hidden="true"></i> <span class="nav-label">Pembagian Daging</span></a>
+                <a href='<?php echo "$basePath/pembagian" ?>'><i class="fa fa-handshake-o" aria-hidden="true"></i> <span class="nav-label">Pembagian Daging</span></a>
             </li>
             <li>
                 <a href="qrcode.html"><i class="fa fa-plus-square"></i> <span class="nav-label">QR Code</span></a>

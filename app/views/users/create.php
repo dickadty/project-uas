@@ -8,6 +8,7 @@ use App\Controllers\UserController;
 $controllerUser = new UserController();
 
 // Get data from controller
+$judulHalaman = 'Tambah User';
 $users = $controllerUser->index();
 
 ob_start();

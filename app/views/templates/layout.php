@@ -2,14 +2,16 @@
 <html lang="en">
 
 <head>
-    <?php include_once __DIR__ . '/../../../includes/header.php'; ?> <!-- Memasukkan header -->
+    <?php
+    $basePath = 'http://' . $_SERVER['HTTP_HOST'] . '/project-uas';
+    include_once __DIR__ . '/../../../includes/header.php'; ?>
 </head>
 
 <body>
 
     <div id="wrapper">
         <!-- Sidebar -->
-        <?php include_once __DIR__ . '/../../../includes/sidebar_admin.php'; ?> <!-- Memasukkan sidebar -->
+        <?php include_once __DIR__ . '/../../../includes/sidebar_admin.php'; ?> 
 
         <div id="page-wrapper" class="gray-bg">
             <!-- Page Content -->
@@ -17,8 +19,6 @@
                 <div class="col-lg-10">
                     <!-- Judul Halaman, bisa diganti sesuai dengan konten yang dimasukkan -->
                     <h2><?= isset($judulHalaman) ? $judulHalaman : 'Dashboard Admin' ?></h2>
-
-
                 </div>
             </div>
 
