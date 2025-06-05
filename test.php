@@ -1,5 +1,5 @@
     <?php
-    if (strpos($_SERVER['REQUEST_URI'], 'users/create') !== false): ?>
+    if (strpos($_SERVER['REQUEST_URI'], 'dashboard/create') !== false): ?>
         
     <?php endif; ?>
 

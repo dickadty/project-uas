@@ -134,7 +134,7 @@ ob_start();
                     </div>
                 </div>
             </div>
-            <a href="users/create" class="btn btn-primary btn-sm mb-3">+ Tambah User</a>
+            <a href="dashboard/create" class="btn btn-primary btn-sm mb-3">+ Tambah User</a>
 
             <!-- Tabel User -->
             <div class="table-responsive">

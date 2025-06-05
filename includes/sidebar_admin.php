@@ -28,7 +28,7 @@
             </li>
 
             <li>
-                <a href='<?php echo "$basePath/users" ?>'><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
+                <a href='<?php echo "$basePath/dashboard" ?>'><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
             </li>
             <li>
                 <a href='<?php echo "$basePath/qurban" ?>'><i class="fa fa-user-circle" aria-hidden="true"></i> <span class="nav-label">Data Peserta</span></a>

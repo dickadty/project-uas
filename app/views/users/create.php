@@ -20,7 +20,7 @@ ob_start();
             <h5>Tambah User</h5>
         </div>
         <div class="ibox-content">
-            <form class="form-horizontal" action="/users/store" method="POST">
+            <form class="form-horizontal" action="/dashboard/store" method="POST">
                 <p>Form untuk menambah user baru.</p>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">Nama</label>
@@ -29,9 +29,22 @@ ob_start();
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-lg-2 control-label">NIK</label>
+                    <div class="col-lg-10">
+                        <input type="text" name="nik" class="form-control" placeholder="NIK" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label">No. HP</label>
+                    <div class="col-lg-10">
+                        <input type="text" name="no_hp" class="form-control" placeholder="No. HP" required>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label class="col-lg-2 control-label">Role</label>
                     <div class="col-lg-10">
                         <select name="role" class="form-control" required>
+                            <option value="" disabled selected hidden>Daftar untuk bagian...</option>
                             <option value="warga">Warga</option>
                             <option value="panitia">Panitia</option>
                             <option value="berqurban">Berqurban</option>
