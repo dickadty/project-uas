@@ -1,6 +1,7 @@
 <?php
 // Pastikan data QR Code sudah diteruskan dari controller
 $data = $data ?? []; // Pastikan data tersedia
+$basePath = 'http://' . $_SERVER['HTTP_HOST'] . '/project-uas';
 ?>
 
 <!DOCTYPE html>
@@ -10,13 +11,13 @@ $data = $data ?? []; // Pastikan data tersedia
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QR Code Generator</title>
-    <?php include_once __DIR__ . '/../../includes/header.php'; ?> <!-- Memasukkan header -->
+    <?php include_once __DIR__ . '/../../../includes/header.php'; ?> <!-- Memasukkan header -->
 </head>
 
 <body>
-    <div class="wrapper">
+    <div id="wrapper">
         <!-- Sidebar -->
-        <?php include_once __DIR__ . '/../../includes/sidebar.php'; ?> <!-- Memasukkan sidebar -->
+        <?php include_once __DIR__ . '/../../../includes/sidebar_admin.php'; ?> <!-- Memasukkan sidebar -->
 
         <div id="page-wrapper" class="gray-bg">
             <!-- Header dan Judul -->

@@ -23,6 +23,14 @@ if (isset($_POST['nik'])) {
                 $data = $result->fetch_assoc();
 
                 $_SESSION['nama'] = $data['nama'];
+                $_SESSION['nik'] = $data['nik'];
+
+                $role = "Warga";
+                if ($data['is_panitia'] == 1)  {$role = "Panitia";}
+                else if ($data['is_qurban'] == 1) {$role = "Berqurban";}
+                else if ($data['is_admin'] == 1)  {$role = "Administrator";}
+
+                $_SESSION['role'] = $role;
                 header("Location: dashboard");
                 exit;
             }
@@ -39,7 +47,7 @@ include_once __DIR__ . '/../../../includes/header.php'; ?>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INSPINIA | Login</title>
+    <title>Dashboard</title>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">

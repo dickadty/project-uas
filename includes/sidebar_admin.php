@@ -1,3 +1,5 @@
+<?php session_start() ?>
+
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
@@ -9,9 +11,9 @@
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear">
                             <span class="block m-t-xs">
-                                <strong class="font-bold">David Williams</strong>
+                                <strong class="font-bold"><?php echo $_SESSION['nama'] ?></strong>
                             </span>
-                            <span class="text-muted text-xs block">Art Director <b class="caret"></b></span>
+                            <span class="text-muted text-xs block"><?php echo $_SESSION['role'] ?> <b class="caret"></b></span>
                         </span>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
