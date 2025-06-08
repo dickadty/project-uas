@@ -39,7 +39,7 @@ class UserController
         $password = $_POST['password'];
         $user = new User();
         $user->create($nama, $role, $password);
-        header('Location: /users');
+        header('Location: /dashboard');
         exit();
     }
 }

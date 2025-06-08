@@ -159,7 +159,7 @@ ob_start();
                                         <a href="edit_user.php?id=<?= $row['id_users'] ?>" class="me-2">
                                             <i class="fa fa-edit text-warning"></i>
                                         </a>
-                                        <a href="hapus_user.php?id=<?= $row['id_users'] ?>" onclick="return confirm('Yakin ingin menghapus user ini?');">
+                                        <a href="dashboard/delete?id=<?= $row['id_users'] ?>" onclick="return confirm('Yakin ingin menghapus user ini?');">
                                             <i class="fa fa-trash text-danger"></i>
                                         </a>
                                     </td>

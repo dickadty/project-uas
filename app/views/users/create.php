@@ -20,7 +20,7 @@ ob_start();
             <h5>Tambah User</h5>
         </div>
         <div class="ibox-content">
-            <form class="form-horizontal" action="/dashboard/store" method="POST">
+            <form class="form-horizontal" action="store" method="POST">
                 <p>Form untuk menambah user baru.</p>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">Nama</label>

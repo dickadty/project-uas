@@ -31,6 +31,7 @@ if (isset($_POST['nik'])) {
                 else if ($data['is_admin'] == 1)  {$role = "Administrator";}
 
                 $_SESSION['role'] = $role;
+                $_SESSION['id_warga'] = $data['id_warga'];
                 header("Location: dashboard");
                 exit;
             }
