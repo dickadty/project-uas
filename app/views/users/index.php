@@ -1,4 +1,8 @@
 <?php
+session_start();
+
+if (isset($_SESSION['nama'])) {} else {header("Location: login");}
+
 require_once 'config/db.php';
 require_once 'app/controllers/KeuanganController.php';
 require_once 'app/controllers/WargaController.php';
