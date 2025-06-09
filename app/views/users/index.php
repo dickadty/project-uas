@@ -115,31 +115,184 @@ ob_start();
         </div>
         <div class="ibox-content">
             <!-- Filter dan Pencarian -->
+            <?php if (!isset($_SESSION['role']) || strtolower($_SESSION['role']) !== 'panitia'): ?>
             <div class="row mb-3">
                 <div class="col-sm-9 m-b-xs">
-                    <div data-toggle="buttons" class="btn-group">
-                        <label class="btn btn-sm btn-white active">
-                            <input type="radio" name="filter" id="semua" checked> Semua
+                    <div data-toggle="buttons" class="btn-group" id="role-filter-group">
+                        <label class="btn btn-sm btn-white active" data-role="semua">
+                            <input type="radio" name="filter" id="semua" autocomplete="off" checked> Semua
                         </label>
-                        <label class="btn btn-sm btn-white">
-                            <input type="radio" name="filter" id="admin"> Admin
+                        <label class="btn btn-sm btn-white" data-role="administrator">
+                            <input type="radio" name="filter" id="administrator" autocomplete="off"> Admin
                         </label>
-                        <label class="btn btn-sm btn-white">
-                            <input type="radio" name="filter" id="user"> User
+                        <label class="btn btn-sm btn-white" data-role="panitia">
+                            <input type="radio" name="filter" id="panitia" autocomplete="off"> Panitia
+                        </label>
+                        <label class="btn btn-sm btn-white" data-role="berqurban">
+                            <input type="radio" name="filter" id="berqurban" autocomplete="off"> Berqurban
+                        </label>
+                        <label class="btn btn-sm btn-white" data-role="warga">
+                            <input type="radio" name="filter" id="warga" autocomplete="off"> Warga
                         </label>
                     </div>
                 </div>
                 <div class="col-sm-3">
                     <div class="input-group">
-                        <input type="text" placeholder="Cari User" class="input-sm form-control">
+                        <input type="text" id="search-user" placeholder="Cari User" class="input-sm form-control">
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-sm btn-primary">Go!</button>
+                            <button type="button" class="btn btn-sm btn-primary" id="search-user-btn">Go!</button>
                         </span>
                     </div>
                 </div>
             </div>
-            <a href="dashboard/create" class="btn btn-primary btn-sm mb-3">+ Tambah User</a>
+            <button class="btn btn-primary btn-sm mb-3" type="button" data-toggle="collapse" data-target="#tambahUserForm" aria-expanded="false" aria-controls="tambahUserForm">
+                + Tambah User
+            </button>
 
+            <!-- Form Tambah User (Collapse) -->
+            <div class="collapse mb-3" id="tambahUserForm">
+                <div class="card card-body">
+                    <form class="form-horizontal" action="dashboard/store" method="POST">
+                        <p>Form untuk menambah user baru.</p>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Nama</label>
+                            <div class="col-lg-10">
+                                <input type="text" name="nama" placeholder="Nama" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">NIK</label>
+                            <div class="col-lg-10">
+                                <input type="text" name="nik" class="form-control" placeholder="NIK" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">No. HP</label>
+                            <div class="col-lg-10">
+                                <input type="text" name="no_hp" class="form-control" placeholder="No. HP" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">No. Rumah</label>
+                            <div class="col-lg-10">
+                                <input type="text" name="no_rumah" class="form-control" placeholder="No. Rumah, e.g. A4 504" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Role</label>
+                            <div class="col-lg-10">
+                                <select name="role" class="form-control" id="role-tambah-user" required>
+                                    <option value="" disabled selected hidden>Daftar untuk bagian...</option>
+                                    <option value="warga">Warga</option>
+                                    <option value="berqurban">Berqurban</option>
+                                    <option value="panitia">Panitia</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group" id="hewan-qurban-group-tambah-user" style="display: none;">
+                            <label class="col-lg-2 control-label">Jenis Hewan</label>
+                            <div class="col-lg-10">
+                                <select class="form-control" name="jenis_hewan" id="jenis_hewan_tambah_user">
+                                    <option value="" disabled selected hidden>Pilih Hewan Qurban</option>
+                                    <option value="kambing">Kambing Rp 2.750.000</option>
+                                    <option value="sapi">Sapi Rp 3.010.000</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">Password</label>
+                            <div class="col-lg-10">
+                                <input type="password" name="password" placeholder="Password" class="form-control" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-10">
+                                <button class="btn btn-sm btn-success" type="submit">Tambah User</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var roleSelect = document.getElementById('role-tambah-user');
+                    var hewanGroup = document.getElementById('hewan-qurban-group-tambah-user');
+                    var jenisHewan = document.getElementById('jenis_hewan_tambah_user');
+
+                    function toggleHewanGroup() {
+                        if (roleSelect.value === 'berqurban') {
+                            hewanGroup.style.display = '';
+                            jenisHewan.setAttribute('required', 'required');
+                        } else {
+                            hewanGroup.style.display = 'none';
+                            jenisHewan.removeAttribute('required');
+                        }
+                    }
+
+                    roleSelect.addEventListener('change', toggleHewanGroup);
+                    // Trigger on load (for autofill or edit)
+                    toggleHewanGroup();
+                });
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Role filter and search
+                    var filterGroup = document.getElementById('role-filter-group');
+                    var tableRows = document.querySelectorAll('table tbody tr');
+                    var searchInput = document.getElementById('search-user');
+                    var searchBtn = document.getElementById('search-user-btn');
+
+                    function normalizeRole(role) {
+                        // Map DB role to display label for filtering
+                        switch (role.toLowerCase()) {
+                            case 'admin': return 'administrator';
+                            default: return role.toLowerCase();
+                        }
+                    }
+
+                    function filterTable() {
+                        var selectedRole = filterGroup.querySelector('label.btn.active').getAttribute('data-role');
+                        var searchValue = searchInput.value.trim().toLowerCase();
+
+                        tableRows.forEach(function(row) {
+                            // If no user data row, skip (e.g. "Tidak ada data user")
+                            var roleCell = row.querySelector('td:nth-child(3)');
+                            var namaCell = row.querySelector('td:nth-child(2)');
+                            if (!roleCell || !namaCell) return;
+
+                            var role = normalizeRole(roleCell.textContent.trim());
+                            var nama = namaCell.textContent.trim().toLowerCase();
+
+                            var roleMatch = (selectedRole === 'semua') || (role === selectedRole);
+                            var searchMatch = !searchValue || nama.includes(searchValue);
+
+                            if (roleMatch && searchMatch) {
+                                row.style.display = '';
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        });
+                    }
+
+                    // Handle filter button click
+                    filterGroup.querySelectorAll('label.btn').forEach(function(label) {
+                        label.addEventListener('click', function() {
+                            filterGroup.querySelectorAll('label.btn').forEach(function(l) {
+                                l.classList.remove('active');
+                            });
+                            label.classList.add('active');
+                            filterTable();
+                        });
+                    });
+
+                    // Handle search
+                    searchInput.addEventListener('input', filterTable);
+                    searchBtn.addEventListener('click', filterTable);
+
+                    // Initial filter
+                    filterTable();
+                });
+            </script>
             <!-- Tabel User -->
             <div class="table-responsive">
                 <table class="table table-striped">
@@ -199,10 +352,70 @@ ob_start();
                     </li>
                 </ul>
             </nav>
+            <?php endif; ?>
         </div>
     </div>
 </div>
+<?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'Panitia'): ?>
+<button class="btn btn-primary btn-sm mb-3" type="button" data-toggle="collapse" data-target="#tambahAlatForm" aria-expanded="false" aria-controls="tambahAlatForm">
+    + Tambah Pembelian Alat
+</button>
 
+<!-- Form Tambah Pembelian Alat (Collapse) -->
+<div class="collapse mb-3" id="tambahAlatForm">
+    <div class="card card-body">
+        <form class="form-horizontal" action="dashboard/store_alat" method="POST">
+            <p>Form untuk mencatat pembelian alat qurban.</p>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Nama Alat</label>
+                <div class="col-lg-9">
+                    <select name="nama_alat" class="form-control" required>
+                        <option value="" disabled selected hidden>Pilih alat...</option>
+                        <option value="Pisau Sembelih">Pisau Sembelih</option>
+                        <option value="Talenan Besar">Talenan Besar</option>
+                        <option value="Timbangan Daging">Timbangan Daging</option>
+                        <option value="Plastik Kemasan">Plastik Kemasan</option>
+                        <option value="Sarung Tangan">Sarung Tangan</option>
+                        <option value="Masker">Masker</option>
+                        <option value="Ember/Bak Penampung">Ember/Bak Penampung</option>
+                        <option value="Tali Tambang">Tali Tambang</option>
+                        <option value="Apron/Penutup Badan">Apron/Penutup Badan</option>
+                        <option value="Alat Tulis">Alat Tulis</option>
+                        <option value="Sabun Cuci Tangan">Sabun Cuci Tangan</option>
+                        <option value="Disinfektan">Disinfektan</option>
+                        <option value="Kantong Sampah">Kantong Sampah</option>
+                        <option value="Gunting">Gunting</option>
+                        <option value="Senter/Headlamp">Senter/Headlamp</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Jumlah</label>
+                <div class="col-lg-9">
+                    <input type="number" name="jumlah" class="form-control" min="1" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Harga Satuan (Rp)</label>
+                <div class="col-lg-9">
+                    <input type="number" name="harga_satuan" class="form-control" min="0" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-lg-3 control-label">Keterangan</label>
+                <div class="col-lg-9">
+                    <input type="text" name="keterangan" class="form-control" placeholder="Opsional">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-lg-offset-3 col-lg-9">
+                    <button class="btn btn-sm btn-success" type="submit">Tambah Pembelian</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<?php endif; ?>
 <?php
 $content = ob_get_clean();
 include_once __DIR__ . '/../templates/layout.php';

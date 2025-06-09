@@ -9,7 +9,10 @@ class Keuangan
     public static function getAllUsers()
     {
         $connection = getConnection();
-        $query = "SELECT * FROM keuangan";
+        $query = "SELECT keuangan.*, warga.nama
+FROM keuangan
+JOIN qurban ON keuangan.id_qurban = qurban.id_qurban
+JOIN warga ON qurban.id_warga = warga.id_warga";
         $result = $connection->query($query);
 
         if (!$result) {

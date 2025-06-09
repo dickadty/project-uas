@@ -39,7 +39,7 @@ ob_start();
                                         <?php foreach ($keuangan as $i => $row): ?>
                                             <tr class="gradeX">
                                                 <td><?= $i + 1 ?></td>
-                                                <td><?= htmlspecialchars($row['warga_nama']) ?></td> <!-- Menampilkan Nama Warga -->
+                                                <td><?= htmlspecialchars($row['nama']) ?></td> <!-- Menampilkan Nama Warga -->
                                                 <td><?= htmlspecialchars($row['jenis_transaksi']) ?></td>
                                                 <td><?= htmlspecialchars($row['deskripsi']) ?></td>
                                                 <td class="center"><?= htmlspecialchars($row['tanggal_transaksi']) ?></td>
