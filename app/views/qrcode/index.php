@@ -14,7 +14,7 @@ if (isset($_GET['qr'])) {
     $stmt->send_long_data(0, $qrcode);
     $stmt->execute();
 
-
+    header("Location: qrcode");
 } else {
     $stmt = $db->prepare("SELECT * FROM pembagian_qurban WHERE id_warga=?");
     $stmt->bind_param("s", $_SESSION['id_warga']);
