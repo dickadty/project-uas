@@ -1,4 +1,11 @@
 <?php
+if (isset($_GET['logout'])) {
+    session_start();
+    session_unset();
+    session_destroy();
+
+    header("Location: login");
+}
 if (isset($_POST['nik'])) {
     include_once __DIR__ . '/../../config/db.php';
     $db = getConnection();

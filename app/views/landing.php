@@ -10,7 +10,7 @@
     <div id="nav">
         <div>Home</div>
         <div>FAQ</div>
-        <div>Dashboard</div>
+        <div><a href="dashboard">Dashboard</a></div>
         <br>
         <div><a href="login">Login</a></div>
         <div><a href="register">Register</a></div>
