@@ -35,7 +35,7 @@ JOIN warga ON qurban.id_warga = warga.id_warga";
             SELECT k.id_keuangan, k.jenis_transaksi, k.deskripsi, k.tanggal_transaksi, 
                    w.nama AS wanama
             FROM keuangan k
-            LEFT JOIN warga w ON k.id_qurban = w.id_warga"; 
+            LEFT JOIN warga w ON k.id_qurban = w.id_warga";
         $result = $connection->query($query);
 
         if (!$result) {
@@ -45,7 +45,7 @@ JOIN warga ON qurban.id_warga = warga.id_warga";
 
         $keuangan = [];
         while ($row = $result->fetch_assoc()) {
-            $keuangan[] = $row;  
+            $keuangan[] = $row;
         }
 
         return $keuangan;

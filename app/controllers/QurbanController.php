@@ -11,8 +11,7 @@ class QurbanController
     public function index()
     {
         $data['judul'] = 'Daftar Pembagian Qurban';
-        $data['qurban'] = Qurban::getAllUsers();
-
-        return $data; // ← Tambahkan ini!
+        $data['qurban'] = Qurban::getAllQurban();  
+        return $data;
     }
 }

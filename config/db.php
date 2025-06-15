@@ -10,7 +10,7 @@ function getConnection()
         $host = 'localhost';
         $username = 'root';
         $password = '';
-        $dbname = 'qurban_db';
+        $dbname = 'db_qurban';
         $conn = new mysqli($host, $username, $password, $dbname);
         if ($conn->connect_error) {
             error_log("Koneksi database gagal: " . $conn->connect_error);

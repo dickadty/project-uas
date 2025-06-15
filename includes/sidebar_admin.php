@@ -1,13 +1,10 @@
-<?php session_start() ?>
+<?php if (session_status() === PHP_SESSION_NONE) session_start(); ?>
 
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element">
-                    <span>
-                        <img alt="image" class="img-circle" src="../pages/" />
-                    </span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear">
                             <span class="block m-t-xs">

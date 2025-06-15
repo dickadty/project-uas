@@ -12,7 +12,6 @@ class WargaController
     {
         $data['judul'] = 'Daftar Pembagian Qurban';
         $data['warga'] = Warga::getAllUsers();
-
         return $data; 
     }
 }

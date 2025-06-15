@@ -152,7 +152,7 @@ ob_start();
             <!-- Form Tambah User (Collapse) -->
             <div class="collapse mb-3" id="tambahUserForm">
                 <div class="card card-body">
-                    <form class="form-horizontal" action="dashboard/store" method="POST">
+                    <form class="form-horizontal" action="/project-uas/api/dashboard/store" method="POST">
                         <p>Form untuk menambah user baru.</p>
                         <div class="form-group">
                             <label class="col-lg-2 control-label">Nama</label>
@@ -182,7 +182,7 @@ ob_start();
                             <label class="col-lg-2 control-label">Role</label>
                             <div class="col-lg-10">
                                 <select name="role" class="form-control" id="role-tambah-user" required>
-                                    <option value="" disabled selected hidden>Daftar untuk bagian...</option>
+                                    <option value="">Daftar untuk bagian...</option>
                                     <option value="warga">Warga</option>
                                     <option value="berqurban">Berqurban</option>
                                     <option value="panitia">Panitia</option>

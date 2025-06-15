@@ -63,7 +63,7 @@ class Router
             if ($route->path === $requestUri && $route->method === $requestMethod) {
                 $action = explode('@', $route->action);
                 require __DIR__ . '/../app/controllers/' . $action[0] . '.php';
-                $controllerName = "\\App\\Http\\Controllers\\" . $action[0];
+                $controllerName = "\\App\\Controllers\\" . $action[0];
                 $methodName = $action[1];
 
                 if (class_exists($controllerName) && method_exists($controllerName, $methodName)) {

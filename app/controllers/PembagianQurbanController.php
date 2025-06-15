@@ -13,5 +13,8 @@ class PembagianQurbanController
     {
         $data['judul'] = 'Daftar Pembagian Qurban';
         $data['pembagian'] = PembagianQurban::getAllUsers();
+        $data['total_berat'] = PembagianQurban::getTotalBerat();
     }
+
+    
 }

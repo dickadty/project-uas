@@ -4,12 +4,7 @@ require_once 'app/controllers/UserController.php';
 
 use App\Controllers\UserController;
 
-// Initialize controller
-$controllerUser = new UserController();
-
-// Get data from controller
 $judulHalaman = 'Tambah User';
-$users = $controllerUser->index();
 
 ob_start();
 ?>
@@ -20,7 +15,7 @@ ob_start();
             <h5>Tambah User</h5>
         </div>
         <div class="ibox-content">
-            <form class="form-horizontal" action="store" method="POST">
+            <form class="form-horizontal" action="<?php echo $basePath . '/api/dashboard/store' ?>" method="POST">
                 <p>Form untuk menambah user baru.</p>
                 <div class="form-group">
                     <label class="col-lg-2 control-label">Nama</label>
@@ -57,6 +52,18 @@ ob_start();
                         <input type="password" name="password" placeholder="Password" class="form-control" required>
                     </div>
                 </div>
+
+                <!-- Tambahkan input untuk jenis hewan jika role = berqurban -->
+                <div class="form-group" id="jenis_hewan_group" style="display:none;">
+                    <label class="col-lg-2 control-label">Jenis Hewan</label>
+                    <div class="col-lg-10">
+                        <select name="jenis_hewan" class="form-control">
+                            <option value="Sapi">Sapi</option>
+                            <option value="Kambing">Kambing</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-10">
                         <button class="btn btn-sm btn-white" type="submit">Tambah User</button>
@@ -66,6 +73,22 @@ ob_start();
         </div>
     </div>
 </div>
+
+<script>
+    document.querySelector('select[name="role"]').addEventListener('change', function() {
+        var role = this.value;
+        var jenisHewanGroup = document.getElementById('jenis_hewan_group');
+        var kontribusiGroup = document.getElementById('kontribusi_group');
+
+        if (role === 'berqurban') {
+            jenisHewanGroup.style.display = 'block';
+            kontribusiGroup.style.display = 'block';
+        } else {
+            jenisHewanGroup.style.display = 'none';
+            kontribusiGroup.style.display = 'none';
+        }
+    });
+</script>
 
 <?php
 $content = ob_get_clean();

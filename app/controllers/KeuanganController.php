@@ -13,9 +13,7 @@ class KeuanganController
     public function index()
     {
         $keuangan = Keuangan::getAllUsers();
-
         $totalDana = $this->getTotalDana();
-
         return ['keuangan' => $keuangan, 'totalDana' => $totalDana];
     }
 
@@ -24,12 +22,10 @@ class KeuanganController
         $connection = getConnection();
         $query = "SELECT SUM(jumlah) AS total_dana FROM keuangan WHERE jenis_transaksi = 'masuk'";
         $result = $connection->query($query);
-
         if ($result) {
             $row = $result->fetch_assoc();
             return $row['total_dana'];
         }
-
         return 0;  
     }
 }

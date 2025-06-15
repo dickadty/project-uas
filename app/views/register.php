@@ -148,7 +148,7 @@ include_once __DIR__ . '/../../../includes/header.php'; ?>
                     <select class="form-control" name="jenis_hewan" id="jenis_hewan">
                         <option value="" disabled selected hidden>Pilih Hewan Qurban</option>
                         <option value="kambing">Kambing Rp 2.750.000</option>
-                        <option value="sapi">Sapi Rp 3.010.000</option>
+                        <option value="sapi">Sapi Rp 3.020.000</option>
                     </select>
                 </div>
 

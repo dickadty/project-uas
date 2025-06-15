@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Exception;
 
 require_once __DIR__ . '/../../config/db.php';
 
@@ -76,23 +77,26 @@ class User
         return $users;
     }
 
-    public static function create($nama, $role, $password)
+    public static function createUser($nik, $role, $password)
     {
         $connection = getConnection();
+        if (!in_array($role, ['admin', 'panitia', 'warga', 'berqurban'])) {
+            throw new Exception('Invalid role');
+        }
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-        $query = "INSERT INTO users (nama, role, password) VALUES (?, ?, ?)";
+        $query = "INSERT INTO users (nik, role, password) VALUES (?, ?, ?)";
         $stmt = $connection->prepare($query);
-        $stmt->bind_param("sss", $nama, $role, $hashedPassword);
+        $stmt->bind_param("sss", $nik, $role, $hashedPassword);
         $stmt->execute();
     }
 
-    public static function update($id, $nama, $role, $password)
+    public static function update($id, $nik, $role, $password)
     {
         $connection = getConnection();
         $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-        $query = "UPDATE users SET nama = ?, role = ?, password = ? WHERE id_users = ?";
+        $query = "UPDATE users SET nik = ?, role = ?, password = ? WHERE id_users = ?";
         $stmt = $connection->prepare($query);
-        $stmt->bind_param("sssi", $nama, $role, $hashedPassword, $id);
+        $stmt->bind_param("sssi", $nik, $role, $hashedPassword, $id);
         $stmt->execute();
     }
 
