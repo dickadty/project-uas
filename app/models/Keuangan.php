@@ -6,7 +6,7 @@ require_once __DIR__ . '/../../config/db.php';
 
 class Keuangan
 {
-    public static function getAllUsers()
+    public static function getAllKeuangan()
     {
         $connection = getConnection();
         $query = "SELECT keuangan.*, warga.nama
@@ -41,29 +41,45 @@ class Keuangan
 
     public static function createKeuangan($nama, $jenis_transaksi, $jumlah, $deskripsi, $tanggal_transaksi)
     {
-        $connection = getConnection();
-        $queryQurban = "SELECT q.id_qurban FROM qurban q JOIN warga w ON q.id_warga = w.id_warga WHERE w.nama = ?";
-        $stmtQurban = $connection->prepare($queryQurban);
-        $stmtQurban->bind_param('s', $nama);
-        $stmtQurban->execute();
-        $resultQurban = $stmtQurban->get_result();
-        $rowQurban = $resultQurban->fetch_assoc();
-        $id_qurban = $rowQurban['id_qurban'] ?? null;
+        try {
+            $connection = getConnection();
+            // Assuming `warga` has a `nama` column, we need the id_qurban first
+            $queryQurban = "SELECT q.id_qurban FROM warga w JOIN qurban q ON q.id_warga = w.id_warga WHERE w.nama = ? AND is_panitia = 1";
+            $stmtQurban = $connection->prepare($queryQurban);
+            if (!$stmtQurban) {
+                throw new \Exception("Prepare failed: " . $connection->error);
+            }
+            $stmtQurban->bind_param('s', $nama);
+            if (!$stmtQurban->execute()) {
+                throw new \Exception("Execute failed: " . $stmtQurban->error);
+            }
+            $resultQurban = $stmtQurban->get_result();
+            $rowQurban = $resultQurban->fetch_assoc();
+            $id_qurban = $rowQurban['id_qurban'] ?? null;
 
-        if (!$id_qurban) {
-            return false;
+            if (!$id_qurban) {
+                throw new \Exception("id_qurban not found for nama: " . $nama);
+            }
+
+            $query = "INSERT INTO keuangan (id_qurban, jenis_transaksi, jumlah, deskripsi, tanggal_transaksi) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $connection->prepare($query);
+            if (!$stmt) {
+                throw new \Exception("Prepare failed: " . $connection->error);
+            }
+            $stmt->bind_param('isdss', $id_qurban, $jenis_transaksi, $jumlah, $deskripsi, $tanggal_transaksi);
+            if (!$stmt->execute()) {
+                throw new \Exception("Execute failed: " . $stmt->error);
+            }
+            return true;
+        } catch (\Exception $e) {
+            throw $e;
         }
-
-        $query = "INSERT INTO keuangan (id_qurban, jenis_transaksi, jumlah, deskripsi, tanggal_transaksi) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $connection->prepare($query);
-        $stmt->bind_param('isdss', $id_qurban, $jenis_transaksi, $jumlah, $deskripsi, $tanggal_transaksi);
-        return $stmt->execute();
     }
 
-    public static function updateKeuangan($id, $nama, $jenis_transaksi, $jumlah, $deskripsi, $tanggal_transaksi)
+    public static function updateKeuangan($id, $jenis_transaksi, $jumlah, $deskripsi, $tanggal_transaksi)
     {
         $connection = getConnection();
-        // Cari id_qurban berdasarkan nama
+        // Fetch `id_qurban` based on the given role or transaction
         $queryQurban = "SELECT q.id_qurban FROM qurban q JOIN warga w ON q.id_warga = w.id_warga WHERE w.nama = ?";
         $stmtQurban = $connection->prepare($queryQurban);
         $stmtQurban->bind_param('s', $nama);

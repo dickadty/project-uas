@@ -30,7 +30,7 @@ $controllerUser = new UserController();
 $keuanganData = $controllerKeuangan->index();
 $totalDana = $keuanganData['totalDana'];
 $keuangan = $keuanganData['keuangan'];
-
+$judulHalaman = 'Tambah User';
 ob_start();
 ?>
 
@@ -89,19 +89,19 @@ ob_start();
                 </table>
             </div>
 
-            <!-- Form Tambah Transaksi Keuangan (Collapse) -->
+
             <div class="collapse mb-3" id="tambahKeuanganForm">
                 <div class="card card-body">
-                    <form class="form-horizontal" action="<?php echo $basePath . '/api/keuangan/store' ?>" method="POST">
+                    <form class="form-horizontal" action="/project-uas/api/keuangan/store" method="POST">
                         <p>Form untuk menambah transaksi keuangan baru.</p>
 
                         <!-- Nama Warga -->
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label class="col-lg-2 control-label">Nama Warga</label>
                             <div class="col-lg-10">
-                                <input type="text" name="nama" placeholder="Nama Warga" class="form-control" required>
+                                <input type="text" name="nama" class="form-control" disabled value="<?php echo $_SESSION['nama'] ?>">
                             </div>
-                        </div>
+                        </div> -->
 
                         <!-- Jenis Transaksi -->
                         <div class="form-group">
@@ -164,8 +164,7 @@ include_once __DIR__ . '/../templates/layout.php';
             pageLength: 25,
             responsive: true,
             dom: '<"html5buttons"B>lTfgitp',
-            buttons: [
-                {
+            buttons: [{
                     extend: 'copy'
                 },
                 {
@@ -193,4 +192,3 @@ include_once __DIR__ . '/../templates/layout.php';
         });
     });
 </script>
-
