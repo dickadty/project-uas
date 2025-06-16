@@ -20,8 +20,11 @@ class HewanController
     {
         $hewan = Hewan::getAllUsers();
         $totalBerat = 0;
+
         foreach ($hewan as $h) {
-            $totalBerat += $h['berat'];
+            if ($h['status'] !== 'diambil') {
+                $totalBerat += $h['berat'];
+            }
         }
 
         return $totalBerat;

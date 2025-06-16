@@ -42,7 +42,6 @@ class Keuangan
     public static function createKeuangan($nama, $jenis_transaksi, $jumlah, $deskripsi, $tanggal_transaksi)
     {
         $connection = getConnection();
-        // Cari id_qurban berdasarkan nama
         $queryQurban = "SELECT q.id_qurban FROM qurban q JOIN warga w ON q.id_warga = w.id_warga WHERE w.nama = ?";
         $stmtQurban = $connection->prepare($queryQurban);
         $stmtQurban->bind_param('s', $nama);

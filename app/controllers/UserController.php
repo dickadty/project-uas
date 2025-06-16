@@ -8,7 +8,6 @@ require_once __DIR__ . '/../models/Warga.php';
 require_once __DIR__ . '/../models/PembagianQurban.php';
 
 use App\Models\User;
-use App\Models\Qurban;
 use App\Models\PembagianQurban;
 use App\Models\Warga;
 
@@ -33,7 +32,7 @@ class UserController
         $data['judul'] = 'Tambah User';
         return $data;
     }
-    // Menyimpan data user, warga, qurban, dan pembagian_qurban
+  
     public function store()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {

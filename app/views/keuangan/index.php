@@ -92,7 +92,7 @@ ob_start();
             <!-- Form Tambah Transaksi Keuangan (Collapse) -->
             <div class="collapse mb-3" id="tambahKeuanganForm">
                 <div class="card card-body">
-                    <form class="form-horizontal" action="/api/dashboard/store_keuangan" method="POST">
+                    <form class="form-horizontal" action="<?php echo $basePath . '/api/keuangan/store' ?>" method="POST">
                         <p>Form untuk menambah transaksi keuangan baru.</p>
 
                         <!-- Nama Warga -->
