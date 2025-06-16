@@ -1,8 +1,6 @@
 <?php
 require_once 'config/db.php';
-require_once 'app/controllers/UserController.php';
 
-use App\Controllers\UserController;
 
 $judulHalaman = 'Tambah User';
 
