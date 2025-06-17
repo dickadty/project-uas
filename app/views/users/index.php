@@ -34,10 +34,27 @@ $users = $controllerUser->index();
 // Extract data for display
 $totalDana = $keuanganData['totalDana'];
 $totalWarga = count($wargaData['warga']);
-$totalQurban = count($qurbanData['qurban']);
+
+// Fix: $qurbanData['qurban'] is now an int, not an array, so don't use count()
+$totalQurban = $qurbanData['qurban'];
 $totalDaging = $hewanData['totalBerat'];
 ob_start();
 ?>
+
+<?php
+// Only show QR code button for warga or berqurban
+if (
+    isset($_SESSION['role']) &&
+    (strtolower($_SESSION['role']) === 'warga' || strtolower($_SESSION['role']) === 'berqurban')
+): ?>
+    <div class="text-center" style="margin-top:60px;">
+        <h2>Selamat datang, <?= htmlspecialchars($_SESSION['nama']) ?>!</h2>
+        <p>Silakan ambil QR Code Anda untuk pembagian qurban.</p>
+        <a href="/project-uas/qrcode" class="btn btn-lg btn-success" style="font-size:1.3em;">
+            <i class="fa fa-qrcode"></i> Ambil QR Code
+        </a>
+    </div>
+<?php else: ?>
 <div class="row">
     <!-- Total Warga -->
     <div class="col-lg-3">
@@ -93,6 +110,8 @@ ob_start();
         </div>
     </div>
 </div>
+
+<?php if (!isset($_SESSION['role']) || strtolower($_SESSION['role']) !== 'panitia'): ?>
 <div class="col-lg-12">
     <div class="ibox float-e-margins">
         <div class="ibox-title">
@@ -192,7 +211,7 @@ ob_start();
                                 <select class="form-control" name="jenis_hewan" id="jenis_hewan_tambah_user">
                                     <option value="" disabled selected hidden>Pilih Hewan Qurban</option>
                                     <option value="kambing">Kambing Rp 2.750.000</option>
-                                    <option value="sapi">Sapi Rp 3.010.000</option>
+                                    <option value="sapi">Sapi Rp 3.100.000</option>
                                 </select>
                             </div>
                         </div>
@@ -352,66 +371,76 @@ ob_start();
         </div>
     </div>
 </div>
-<?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'Panitia'): ?>
-<button class="btn btn-primary btn-sm mb-3" type="button" data-toggle="collapse" data-target="#tambahAlatForm" aria-expanded="false" aria-controls="tambahAlatForm">
-    + Tambah Pembelian Alat
-</button>
+<?php endif; ?>
 
-<!-- Form Tambah Pembelian Alat (Collapse) -->
-<div class="collapse mb-3" id="tambahAlatForm">
-    <div class="card card-body">
-        <form class="form-horizontal" action="dashboard/store_alat" method="POST">
-            <p>Form untuk mencatat pembelian alat qurban.</p>
-            <div class="form-group">
-                <label class="col-lg-3 control-label">Nama Alat</label>
-                <div class="col-lg-9">
-                    <select name="nama_alat" class="form-control" required>
-                        <option value="" disabled selected hidden>Pilih alat...</option>
-                        <option value="Pisau Sembelih">Pisau Sembelih</option>
-                        <option value="Talenan Besar">Talenan Besar</option>
-                        <option value="Timbangan Daging">Timbangan Daging</option>
-                        <option value="Plastik Kemasan">Plastik Kemasan</option>
-                        <option value="Sarung Tangan">Sarung Tangan</option>
-                        <option value="Masker">Masker</option>
-                        <option value="Ember/Bak Penampung">Ember/Bak Penampung</option>
-                        <option value="Tali Tambang">Tali Tambang</option>
-                        <option value="Apron/Penutup Badan">Apron/Penutup Badan</option>
-                        <option value="Alat Tulis">Alat Tulis</option>
-                        <option value="Sabun Cuci Tangan">Sabun Cuci Tangan</option>
-                        <option value="Disinfektan">Disinfektan</option>
-                        <option value="Kantong Sampah">Kantong Sampah</option>
-                        <option value="Gunting">Gunting</option>
-                        <option value="Senter/Headlamp">Senter/Headlamp</option>
-                    </select>
+<?php if (isset($_SESSION['role']) && strtolower($_SESSION['role']) === 'panitia'): ?>
+<div class="col-lg-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Tambah Pembelian Alat</h5>
+        </div>
+        <div class="ibox-content">
+            <button class="btn btn-primary btn-sm mb-3" type="button" data-toggle="collapse" data-target="#tambahAlatForm" aria-expanded="false" aria-controls="tambahAlatForm">
+                + Tambah Pembelian Alat
+            </button>
+            <div class="collapse mb-3" id="tambahAlatForm">
+                <div class="card card-body">
+                    <form class="form-horizontal" action="dashboard/store_alat" method="POST">
+                        <p>Form untuk mencatat pembelian alat qurban.</p>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Nama Alat</label>
+                            <div class="col-lg-9">
+                                <select name="nama_alat" class="form-control" required>
+                                    <option value="" disabled selected hidden>Pilih alat...</option>
+                                    <option value="Pisau Sembelih">Pisau Sembelih</option>
+                                    <option value="Talenan Besar">Talenan Besar</option>
+                                    <option value="Timbangan Daging">Timbangan Daging</option>
+                                    <option value="Plastik Kemasan">Plastik Kemasan</option>
+                                    <option value="Sarung Tangan">Sarung Tangan</option>
+                                    <option value="Masker">Masker</option>
+                                    <option value="Ember/Bak Penampung">Ember/Bak Penampung</option>
+                                    <option value="Tali Tambang">Tali Tambang</option>
+                                    <option value="Apron/Penutup Badan">Apron/Penutup Badan</option>
+                                    <option value="Alat Tulis">Alat Tulis</option>
+                                    <option value="Sabun Cuci Tangan">Sabun Cuci Tangan</option>
+                                    <option value="Disinfektan">Disinfektan</option>
+                                    <option value="Kantong Sampah">Kantong Sampah</option>
+                                    <option value="Gunting">Gunting</option>
+                                    <option value="Senter/Headlamp">Senter/Headlamp</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Jumlah</label>
+                            <div class="col-lg-9">
+                                <input type="number" name="jumlah" class="form-control" min="1" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Harga Satuan (Rp)</label>
+                            <div class="col-lg-9">
+                                <input type="number" name="harga_satuan" class="form-control" min="0" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Keterangan</label>
+                            <div class="col-lg-9">
+                                <input type="text" name="keterangan" class="form-control" placeholder="Opsional">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-offset-3 col-lg-9">
+                                <button class="btn btn-sm btn-success" type="submit">Tambah Pembelian</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="col-lg-3 control-label">Jumlah</label>
-                <div class="col-lg-9">
-                    <input type="number" name="jumlah" class="form-control" min="1" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-lg-3 control-label">Harga Satuan (Rp)</label>
-                <div class="col-lg-9">
-                    <input type="number" name="harga_satuan" class="form-control" min="0" required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-lg-3 control-label">Keterangan</label>
-                <div class="col-lg-9">
-                    <input type="text" name="keterangan" class="form-control" placeholder="Opsional">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-lg-offset-3 col-lg-9">
-                    <button class="btn btn-sm btn-success" type="submit">Tambah Pembelian</button>
-                </div>
-            </div>
-        </form>
+        </div>
     </div>
 </div>
 <?php endif; ?>
+<?php endif; // <-- close the main QR code/warga/berqurban conditional ?>
 <?php
 $content = ob_get_clean();
 include_once __DIR__ . '/../templates/layout.php';

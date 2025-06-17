@@ -71,7 +71,10 @@ if (isset($_POST['nik'])) {
     // Tentukan jumlah_kg berdasarkan role
     $jumlah_kg = 2;
     if ($role === 'berqurban') {
-        $jumlah_kg = 6;
+        $jumlah_kg = 3;
+    }
+    if ($role === 'panitia' || $role === 'admin') {
+        $jumlah_kg = 4;
     }
 
     $status_ambil = 0;  // Status ambil diatur ke 0 (belum diambil)

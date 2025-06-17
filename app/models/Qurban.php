@@ -9,20 +9,33 @@ class Qurban
     public static function getAllQurban() 
     {
         $connection = getConnection();
-        $query = "SELECT * FROM qurban";  
+        $query = "
+            SELECT 
+                q.id_hewan,
+                h.jenis_hewan,
+                h.berat,
+                COUNT(*) AS jumlah_peserta,
+                CASE 
+                    WHEN q.id_hewan = 1 THEN CEIL(COUNT(*) / 7)
+                    ELSE COUNT(*)
+                END AS jumlah_qurban
+            FROM qurban q
+            JOIN hewan h ON q.id_hewan = h.id_hewan
+            GROUP BY q.id_hewan
+        ";  
         $result = $connection->query($query);
 
         if (!$result) {
             error_log("Query Error: " . $connection->error);
-            return [];
+            return 0;
         }
 
-        $qurban = [];
+        $total_qurban = 0;
         while ($row = $result->fetch_assoc()) {
-            $qurban[] = $row;
+            $total_qurban += (int)$row['jumlah_qurban'];
         }
 
-        return $qurban;
+        return $total_qurban;
     }
 
     public static function getIdHewanByJenis($jenis_hewan)

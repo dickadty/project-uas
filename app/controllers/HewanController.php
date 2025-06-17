@@ -18,15 +18,30 @@ class HewanController
     }
     private function getTotalBerat()
     {
-        $hewan = Hewan::getAllUsers();
-        $totalBerat = 0;
+        // Ambil data qurban dengan jumlah_qurban dan berat per jenis
+        $connection = \getConnection();
+        $query = "
+            SELECT 
+                q.id_hewan,
+                h.jenis_hewan,
+                h.berat,
+                COUNT(*) AS jumlah_peserta,
+                CASE 
+                    WHEN q.id_hewan = 1 THEN CEIL(COUNT(*) / 7)
+                    ELSE COUNT(*)
+                END AS jumlah_qurban
+            FROM qurban q
+            JOIN hewan h ON q.id_hewan = h.id_hewan
+            GROUP BY q.id_hewan
+        ";
+        $result = $connection->query($query);
 
-        foreach ($hewan as $h) {
-            if ($h['status'] !== 'diambil') {
-                $totalBerat += $h['berat'];
+        $totalBerat = 0;
+        if ($result) {
+            while ($row = $result->fetch_assoc()) {
+                $totalBerat += ((int)$row['jumlah_qurban']) * ((float)$row['berat']);
             }
         }
-
         return $totalBerat;
     }
 }

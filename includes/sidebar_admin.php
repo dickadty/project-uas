@@ -41,9 +41,9 @@
                 <li>
                     <a href="qrcode"><i class="fa fa-plus-square"></i> <span class="nav-label">QR Code</span></a>
                 </li>
-               <li>
+               <!-- <li>
                     <a href="laporan.html"><i class="fa fa-file-pdf-o"></i> <span class="nav-label">Laporan</span></a>
-                </li>
+                </li> -->
             <?php else: ?>
                 <li>
                     <a href='<?php echo "$basePath/dashboard" ?>'><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
