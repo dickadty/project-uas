@@ -438,7 +438,6 @@ if (
     </div>
 </div>
 <?php endif; ?>
-<?php endif; // <-- close the main QR code/warga/berqurban conditional ?>
 <?php
 $content = ob_get_clean();
 include_once __DIR__ . '/../templates/layout.php';
