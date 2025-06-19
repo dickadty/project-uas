@@ -10,9 +10,8 @@ class Keuangan
     {
         $connection = getConnection();
         $query = "SELECT keuangan.*, warga.nama
-                  FROM keuangan
-                  JOIN qurban ON keuangan.id_qurban = qurban.id_qurban
-                  JOIN warga ON qurban.id_warga = warga.id_warga";
+            FROM keuangan
+            LEFT JOIN warga ON keuangan.id_warga = warga.id_warga;";
         $result = $connection->query($query);
 
         if (!$result) {

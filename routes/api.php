@@ -11,6 +11,7 @@ $router->addRoute('/api/dashboard/store', 'UserController@store', 'POST', '');
 $router->addRoute('/api/keuangan/store', 'KeuanganController@store', 'POST', '');
 $router->addRoute('/dashboard/delete', '', 'GET', '/../app/views/users/delete.php');
 $router->addRoute('/keuangan', '', 'GET', '/../app/views/keuangan/index.php');
+$router->addRoute('/keuangan/spend', '', 'GET', '/../app/views/keuangan/store.php');
 $router->addRoute('/qurban', '', 'GET', '/../app/views/qurban/index.php');
 $router->addRoute('/warga', '', 'GET', '/../app/views/warga/index.php');
 $router->addRoute('/pembagian', '', 'GET', '/../app/views/pembagian_qurban/index.php');

@@ -25,7 +25,14 @@ class KeuanganController
             throw new \Exception('Function getConnection() not found.');
         }
         $connection = getConnection();
-        $query = "SELECT SUM(jumlah) AS total_dana FROM keuangan WHERE jenis_transaksi = 'masuk'";
+        // Sum masuk - sum keluar
+        $query = "
+            SELECT 
+                (SELECT COALESCE(SUM(jumlah),0) FROM keuangan WHERE jenis_transaksi = 'masuk') 
+                - 
+                (SELECT COALESCE(SUM(jumlah),0) FROM keuangan WHERE jenis_transaksi = 'keluar') 
+                AS total_dana
+        ";
         $result = $connection->query($query);
         if ($result) {
             $row = $result->fetch_assoc();

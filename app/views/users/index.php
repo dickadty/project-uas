@@ -437,6 +437,71 @@ if (
         </div>
     </div>
 </div>
+<!-- New: Pembelian Hewan Qurban -->
+<div class="col-lg-12">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>Tambah Pembelian Hewan Qurban</h5>
+        </div>
+        <div class="ibox-content">
+            <button class="btn btn-primary btn-sm mb-3" type="button" data-toggle="collapse" data-target="#tambahHewanForm" aria-expanded="false" aria-controls="tambahHewanForm">
+                + Tambah Pembelian Hewan Qurban
+            </button>
+            <div class="collapse mb-3" id="tambahHewanForm">
+                <div class="card card-body">
+                    <form class="form-horizontal" action="keuangan/spend" method="POST">
+                        <p>Form untuk mencatat pembelian hewan qurban.</p>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Jenis Hewan</label>
+                            <div class="col-lg-9">
+                                <select name="jenis_hewan" class="form-control" required>
+                                    <option value="" disabled selected hidden>Pilih hewan...</option>
+                                    <option value="Kambing">Kambing (Rp 2.700.000)</option>
+                                    <option value="Sapi">Sapi (Rp 21.000.000)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Jumlah</label>
+                            <div class="col-lg-9">
+                                <input type="number" name="jumlah" class="form-control" min="1" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">Keterangan</label>
+                            <div class="col-lg-9">
+                                <input type="text" name="keterangan" class="form-control" placeholder="Opsional">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-offset-3 col-lg-9">
+                                <button class="btn btn-sm btn-success" type="submit">Tambah Pembelian</button>
+                            </div>
+                        </div>
+                    </form>
+                    <script>
+                        // Auto-fill harga_satuan based on jenis_hewan
+                        document.addEventListener('DOMContentLoaded', function() {
+                            var jenisSelect = document.querySelector('select[name="jenis_hewan"]');
+                            var hargaInput = document.querySelector('input[name="harga_satuan"]');
+                            if (jenisSelect && hargaInput) {
+                                jenisSelect.addEventListener('change', function() {
+                                    if (jenisSelect.value === 'Kambing') {
+                                        hargaInput.value = 2700000;
+                                    } else if (jenisSelect.value === 'Sapi') {
+                                        hargaInput.value = 21000000;
+                                    } else {
+                                        hargaInput.value = '';
+                                    }
+                                });
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <?php endif; ?>
 <?php
 $content = ob_get_clean();
